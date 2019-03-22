@@ -1,0 +1,96 @@
+package end;
+
+import java.awt.*;
+import javax.swing.*;
+import java.awt.event.*;
+
+public class electric extends JFrame implements ActionListener,MouseMotionListener,MouseListener
+{
+    Container c;
+    //設定UI元件
+    JLabel lab;
+    JButton bot;
+    Timer t;
+    //設定共用的變數與類別
+    int x1,y1,x2,y2,x,y,dir,tt;
+    public electric()   //建構元，名稱改一改
+    {
+        super("電流急急棒"); 
+        //初始化共用變數
+        x1=100;x2=150;y1=150;y2=400;x=50;y=100;dir=10;tt=0;
+        c=getContentPane();//取得ContentPane
+        //設定版面設定
+        c.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        //初始化UI元件
+        bot=new JButton("開始");
+        lab=new JLabel("還沒開始");
+        t=new Timer(500,this);
+        c.add(bot);c.add(lab);
+        bot.addActionListener(this);
+        addMouseMotionListener(this);
+        addMouseListener(this);
+        //將UI元件加入ContentPane
+        //設定UI元件與滑鼠的事件觸發傾聽者
+        setSize(640,480);//設定size，顯示出去
+        setVisible(true);
+    }
+    public void paint(Graphics g)  
+    {
+	    super.paint(g);//畫出元件
+	    g.fillRect(0,y1,x1,y2-y1);
+	    g.fillRect(x2,y1,600,y2-y1);
+	    g.setColor(Color.red);
+	    g.fillOval(x,y,5,5);
+	    //額外的畫圖程式寫在這裡
+	    if(y>y2)
+	    {
+	    	    lab.setText("贏了 經過"+(tt/2)+"秒");
+	    	    t.stop();
+	    }
+	    else if(y>y1&&x<x1||x>x2)
+	    {
+	    	    lab.setText("輸了");
+	    	    t.stop();
+	    }
+    }
+    //UI元件事件處理類別寫在這裡
+    public void actionPerformed(ActionEvent e)
+	{
+		if(e.getSource()==bot)
+			t.start();
+		else if(e.getSource()==t)
+		{
+			x1=x1+dir;
+			x2=x2+dir;
+			tt=tt+1;
+			lab.setText("經過:"+(tt/2)+"秒");
+		}
+		if(x1>500)dir=-10;
+		if(x1<50)dir=10;
+		repaint();
+	}
+    //滑鼠事件處理類別寫在這裡
+   	public void mousePressed(MouseEvent e){}
+   	public void mouseReleased(MouseEvent e){}
+	public void mouseClicked(MouseEvent e){}
+	public void mouseEntered(MouseEvent e){}
+	public void mouseExited(MouseEvent e){}
+    	public void mouseMoved(MouseEvent e){}                                                                                                                     
+    	public void mouseDragged(MouseEvent e)
+    	{
+    		x=e.getX();
+    		y=e.getY();
+    		repaint();
+    	}
+  /***主程式***/
+    public static void main(String args[]) //程式起點
+    {
+        electric app=new electric(); //名稱改一改，啟動UI元件
+        app.addWindowListener(new WindowAdapter(){ 
+            public void windowClosing(WindowEvent e)
+            {
+                System.exit(0);
+            }
+        }); //處理視窗關閉要求
+    }
+}

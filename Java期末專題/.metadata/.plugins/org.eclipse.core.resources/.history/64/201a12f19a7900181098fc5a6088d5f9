@@ -1,0 +1,27 @@
+package end;
+
+
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFrame;
+
+public class AB extends JFrame {
+	
+	public AB() {
+		this.setLocation(200, 150);
+		this.setSize(1200, 800);
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	public static void main(String[] args) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		// TODO Auto-generated method stub
+		new AB();
+		System.out.println("123");
+		new a2();
+
+	}
+
+}
